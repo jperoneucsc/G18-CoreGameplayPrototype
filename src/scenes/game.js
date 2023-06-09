@@ -13,13 +13,23 @@ class Game extends Phaser.Scene {
         this.load.image('trashcan', 'src/assets/trashcan.png')
     }
 
+
+
     create() {
-        this.player = this.physics.add.image(100, 100, 'skateboarder').setScale(0.5)
+        // Get the screen width + height
+        const width = this.scale.width;
+        const height = this.scale.height;
+        
+        const sceneWidth = 1080;
+        const sceneHeight = 1920;
+        this.player = this.physics.add.image(sceneWidth/2, 150, 'skateboarder').setScale(0.5)
         //this.cursors = this.input.keyboard.createCursorKeys();
         //this.keys = this.input.keyboard.addKeys("W,A,S,D,E,SPACE");
 
     }
-    
+
+
+
     update()
     {  
         // -------------------------------- PLAYER MOVEMENT ---------------------------------------
