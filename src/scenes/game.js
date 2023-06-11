@@ -14,9 +14,10 @@ class Game extends Phaser.Scene {
 
     preload(){
         this.load.image('skateboarder', 'src/assets/player.png')
-        this.load.image('ramp', 'src/assets/ramp.png')
         this.load.image('trashcan', 'src/assets/trashcan.png')
         this.load.image('background', 'src/assets/tempBackground.png')
+        this.load.image('obstacle', 'src/assets/trashcan.png')
+        this.load.image('coin', 'src/assets/coin.png')
 
         this.load.audio('rollingSound', 'src/assets/skateboardingSound.mp3')
     }
@@ -41,11 +42,51 @@ class Game extends Phaser.Scene {
 
         this.player = this.physics.add.image(sceneWidth/2, 200, 'skateboarder').setScale(0.5);
         this.player.setCollideWorldBounds(true);
-        //this.cursors = this.input.keyboard.createCursorKeys();
-        //this.keys = this.input.keyboard.addKeys("W,A,S,D,E,SPACE");
+
+
+        this.player.body.onCollide = true;  
+
+        this.obstacleGroup = this.add.group({  
+            runChildUpdate: true    
+        });
+
+        this.coinGroup = this.add.group({  
+            runChildUpdate: true    
+        });
+
+        this.time.delayedCall(3000, () => { 
+            this.addObstacle(); 
+        });
+
+        this.addCoin();
 
     }
 
+    addObstacle() {
+        let speedVariance =  Phaser.Math.Between(0, 50);
+        let obstacle = new Obstacle(this, 500);
+        this.obstacleGroup.add(obstacle);
+    }
+
+    obstacleCollide() {
+        this.player.destroy()
+    } 
+
+
+    addCoin() {
+        let CspeedVariance =  Phaser.Math.Between(0, 50);
+        let coin = new Coin(this, 500);
+        this.coinGroup.add(coin);
+    }
+
+    coinCollide() {
+        const coins = this.coinGroup.getChildren();
+        const coin = Phaser.Utils.Array.RemoveRandomElement(coins);
+        if (coin)
+        {
+            coin.destroy();
+        }
+    } 
 
 
     update()
@@ -63,6 +104,14 @@ class Game extends Phaser.Scene {
         else if (cursors.right.isDown || keys.D.isDown){
             this.player.x += 8;
         }
+
+        if (this.physics.overlap(this.player, this.obstacleGroup)) {
+            this.obstacleCollide();
+        }
+ 
+        if (this.physics.overlap(this.player, this.coinGroup)) {
+            this.coinCollide();
+        }        
     }    
 
 }
