@@ -2,15 +2,21 @@ class Game extends Phaser.Scene {
     constructor() {
         super('Game')
     }
-/*
-    init(data){
-        this.highscore = data.data;
-    } */
+
+    init(){
+        this.DEPTH = { floor: 0};
+
+        // Flags
+        this.allow_input    = false;    // Can player move
+        this.is_pause       = false;    // is the game paused?
+        this.is_gameover    = false;    // display gameover screen?
+    } 
 
     preload(){
         this.load.image('skateboarder', 'src/assets/player.png')
         this.load.image('ramp', 'src/assets/ramp.png')
         this.load.image('trashcan', 'src/assets/trashcan.png')
+        this.load.image('background', 'src/assets/tempBackground.png')
     }
 
 
@@ -22,7 +28,13 @@ class Game extends Phaser.Scene {
         
         const sceneWidth = 1080;
         const sceneHeight = 1920;
-        this.player = this.physics.add.image(sceneWidth/2, 150, 'skateboarder').setScale(0.5)
+
+        this.physics.world.setBounds(0,0, sceneWidth, sceneHeight);
+
+        this.background = this.add.image(0, 0, 'background').setOrigin(0,0);
+
+        this.player = this.physics.add.image(sceneWidth/2, 200, 'skateboarder').setScale(0.5);
+        this.player.setCollideWorldBounds(true);
         //this.cursors = this.input.keyboard.createCursorKeys();
         //this.keys = this.input.keyboard.addKeys("W,A,S,D,E,SPACE");
 
