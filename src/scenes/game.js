@@ -17,6 +17,8 @@ class Game extends Phaser.Scene {
         this.load.image('ramp', 'src/assets/ramp.png')
         this.load.image('trashcan', 'src/assets/trashcan.png')
         this.load.image('background', 'src/assets/tempBackground.png')
+
+        this.load.audio('rollingSound', 'src/assets/skateboardingSound.mp3')
     }
 
 
@@ -25,13 +27,17 @@ class Game extends Phaser.Scene {
         // Get the screen width + height
         const width = this.scale.width;
         const height = this.scale.height;
+
+        this.backgroundNoise = this.sound.add('rollingSound', {volume : .05, rate : 1.5});
+        this.backgroundNoise.loop = true;
+        this.backgroundNoise.play();
         
         const sceneWidth = 1080;
         const sceneHeight = 1920;
 
         this.physics.world.setBounds(0,0, sceneWidth, sceneHeight);
 
-        this.background = this.add.image(0, 0, 'background').setOrigin(0,0);
+        this.background = this.add.tileSprite(0, 0, 1080, 1920, 'background').setOrigin(0,0);
 
         this.player = this.physics.add.image(sceneWidth/2, 200, 'skateboarder').setScale(0.5);
         this.player.setCollideWorldBounds(true);
@@ -48,6 +54,7 @@ class Game extends Phaser.Scene {
         const cursors = this.input.keyboard.createCursorKeys();
         const keys = this.input.keyboard.addKeys("W,A,S,D,E,SPACE");
 
+        this.background.tilePositionY += 20;
 
         // Check if player is pressing left or right, with shift or not
         if (cursors.left.isDown || keys.A.isDown){
