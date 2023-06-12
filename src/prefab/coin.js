@@ -22,7 +22,7 @@ class Coin extends Phaser.Physics.Arcade.Sprite {
         }
 
         // destroy paddle if it reaches the left edge of the screen
-        if(this.y < 0) {
+        if(this.y < -200) {
             this.destroy();
         } 
     }
