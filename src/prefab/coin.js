@@ -1,7 +1,7 @@
 class Coin extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, velocity) {
         // call Phaser Physics Sprite constructor
-        super(scene, Phaser.Math.Between(0, 1080), 1920, 'coin'); 
+        super(scene, Phaser.Math.Between(0, 1080), 2250, 'coin'); 
         this.parentScene = scene;               // maintain scene context
 
         // set up physics sprite

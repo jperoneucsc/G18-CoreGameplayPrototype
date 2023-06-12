@@ -64,7 +64,7 @@ class Game extends Phaser.Scene {
 
     addObstacle() {
         let speedVariance =  Phaser.Math.Between(0, 50);
-        let obstacle = new Obstacle(this, 500);
+        let obstacle = new Obstacle(this, 1500);
         this.obstacleGroup.add(obstacle);
     }
 
@@ -74,8 +74,8 @@ class Game extends Phaser.Scene {
 
 
     addCoin() {
-        let CspeedVariance =  Phaser.Math.Between(0, 50);
-        let coin = new Coin(this, 500);
+        let CspeedVariance =  Phaser.Math.Between(100, 500);
+        let coin = new Coin(this, 1500);
         this.coinGroup.add(coin);
     }
 
